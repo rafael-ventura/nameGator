@@ -92,8 +92,7 @@ export default {
             },
           },
         },
-      })
-      .then(response =>{
+      }).then((response) => {
         const query = response.data;
         const newPrefix = query.data.newPrefix;
         this.prefixes.push(newPrefix.description);
@@ -103,7 +102,23 @@ export default {
       this.sufixes.push(sufix);
     },
     deletePrefix(prefix) {
-      this.prefixes.splice(this.prefixes.indexOf(prefix), 1);
+      //this.prefixes.splice(this.prefixes.indexOf(prefix), 1);
+      axios({
+        url: 'http://localhost:4000',
+        method: 'post',
+        data: {
+          query: `
+            mutation ($id: Int) {
+              deletedPrefix: deleteItem(id: $id)
+            }
+          `,
+          variables: {
+            id: prefix.id,
+          },
+        },
+      }).then(() => {
+        this.getPrefixes();
+      });
     },
     deleteSufix(sufix) {
       this.sufixes.splice(this.prefixes.indexOf(sufix), 1);
