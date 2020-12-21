@@ -35,7 +35,6 @@ const items = [
 const resolvers = {
   Query: {
     items(_, args) {
-      console.log(args);
       return items.filter((item) => item.type === args.type);
     },
   },
