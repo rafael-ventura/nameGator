@@ -13,6 +13,7 @@ const typeDefs = `
         name: String
         checkout: String
         available: Boolean
+        extension: String
     }
     type Query {
         items(type: String): [Item]
@@ -26,7 +27,8 @@ const typeDefs = `
     type Mutation {
         saveItem(item: ItemInput) : Item
         deleteItem(id: Int) : Boolean
-        generateDomains: [Domain]
+        generateDomains: [Domain],
+        generateDomainInfo(name: String): [Domain]
       }
 `;
 
@@ -86,6 +88,23 @@ const resolvers = {
             available,
           });
         }
+      }
+      return domains;
+    },
+    async generateDomainInfo(_, args) {
+      const name = args.name;
+      const domains = [];
+      const extensions = ['.com.br', '.com', '.net', '.org'];
+      for (const extension of extensions) {
+        const url = name.toLowerCase();
+        const checkout = `https://checkout.hostgator.com.br/?a=add&sld=${extension}&tld=.com`;
+        const available = await isDomainAvailable(`${url}${extension}`);
+        domains.push({
+          name,
+          checkout,
+          available,
+          extension,
+        });
       }
       return domains;
     },

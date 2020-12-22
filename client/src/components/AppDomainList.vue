@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-md">
             <AppItemList
-              title="Prefixo"
+              title="Prefixos"
               type="prefix"
               v-bind:items="items.prefix"
               v-on:addItem="addItem"
@@ -14,7 +14,7 @@
           </div>
           <div class="col-md">
             <AppItemList
-              title="Sufixo"
+              title="Sufixos"
               type="sufix"
               v-bind:items="items.sufix"
               v-on:addItem="addItem"
@@ -41,11 +41,15 @@
                   <div class="col-md text-center">
                     <span
                       class="badge badge-pill badge-success"
-                      v-bind:class="{ 'badge-danger': !domain.available}"
+                      v-bind:class="{ 'badge-danger': !domain.available }"
                       >{{ domain.available ? 'Disponivel' : 'Ja existe' }}</span
                     >
                   </div>
                   <div class="col-md text-right">
+                    <button class="btn btn-info" @click="openDomain(domain)">
+                      <span class="fa fa-search"></span>
+                    </button>
+                    &nbsp;
                     <a
                       class="btn btn-info"
                       v-bind:href="domain.checkout"
@@ -169,6 +173,11 @@ export default {
       }).then((response) => {
         const query = response.data;
         this.domains = query.data.domains;
+      });
+    },
+    openDomain(domain) {
+      this.$router.push({
+        path: `/domains/${domain.name}`,
       });
     },
   },
