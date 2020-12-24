@@ -1,15 +1,16 @@
 {
-  "name": "namegator_server",
+  "name": "namegator-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "rafael.ventura",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.19.0",
-    "graphql": "^15.4.0"
+    "apollo-server": "^2.9.6",
+    "graphql": "^14.5.8",
+    "pg": "^7.14.0"
   }
 }
